@@ -3,6 +3,8 @@ package es.kiketurry.talkaboutkotlin
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View.GONE
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,8 +13,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        varVal()
-        nulos()
+//        varVal()
+//        nulos()
+//        extensiones()
     }
 
 
@@ -66,7 +69,8 @@ class MainActivity : AppCompatActivity() {
         Log.i(tag, "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)}")
 
         //Operador Elvis
-        Log.i(tag,
+        Log.i(
+            tag,
             "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)
                 ?: "Ten cuidado que estas jugando con nulos"}"
         )
@@ -76,5 +80,16 @@ class MainActivity : AppCompatActivity() {
 
         nombreNulo = "Enrique"
         Log.i(tag, "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)}")
+    }
+
+    private fun extensiones() {
+        toast("Mira Chechu..... Las extensiones son la salsa de la vida!")
+        tvHello.visibility = GONE
+        tvHello.setGone()
+        tvHello.setInvisible()
+        tvHello.setVisible()
+
+        tvHello.clearText()
+        tvHello.defaultText()
     }
 }
