@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         varVal()
+        nulos()
     }
+
 
     fun nombreFuncion(parametroUno: Int, parametroDos: Int): Double {
         val retorno: Double = 3.0
@@ -42,4 +44,37 @@ class MainActivity : AppCompatActivity() {
 
     //Infiere los tipos
     fun funcionSimple(entero: Int): Int = 2 * entero
+
+
+    fun nulos() {
+        //var nombre: String = null
+        var nombreNulo: String? = null
+        var nombre2: String
+
+//        nombre2 = nombreNulo
+
+        if (nombreNulo != null) {
+            nombre2 = nombreNulo
+        }
+
+        //Log.i(tag, "l> Imprimimos nombre null: ${nombreNulo.substring(5)}")
+        if (nombreNulo != null) {
+            Log.i(tag, "l> Imprimimos nombre null si es distinto de null: ${nombreNulo.substring(4)}")
+        }
+
+        //No efectua la operación para no cascar
+        Log.i(tag, "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)}")
+
+        //Operador Elvis
+        Log.i(tag,
+            "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)
+                ?: "Ten cuidado que estas jugando con nulos"}"
+        )
+
+        //Cabezón ahí tienes el null pointer Exception
+        //Log.i(tag, "l> Imprimimos nombre null a la fuerza: ${nombreNulo!!.substring(4)}")
+
+        nombreNulo = "Enrique"
+        Log.i(tag, "l> Imprimimos nombre null si es distinto de null: ${nombreNulo?.substring(4)}")
+    }
 }
