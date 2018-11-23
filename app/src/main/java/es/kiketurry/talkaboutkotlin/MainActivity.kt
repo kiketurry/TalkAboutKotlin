@@ -5,10 +5,16 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View.GONE
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     val tag: String = MainActivity::class.java.simpleName
+
+    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 //        varVal()
 //        nulos()
 //        extensiones()
+//        corrutines()
     }
 
 
@@ -91,5 +98,73 @@ class MainActivity : AppCompatActivity() {
 
         tvHello.clearText()
         tvHello.defaultText()
+    }
+
+    fun corrutines() {
+        doAsync {
+            Log.i(tag, "l> Vamos a iniciar el calculo de la serie de fibonacci: " + formatter.format(Date()))
+            var resultFibonacci = fibonacciSerie(80)
+            uiThread {
+                Log.i(tag, "l> UI Ya tenemos el resultado fibonacci: " + formatter.format(Date()))
+                Log.i(tag, "l> $resultFibonacci")
+            }
+        }
+        doAsync {
+            Log.i(tag, "l> Vamos a iniciar el calculo de la serie de primos: " + formatter.format(Date()))
+            var resultPrimo = listaPrimos(100)
+            uiThread {
+                Log.i(tag, "l> UI Ya tenemos el resultado primos: " + formatter.format(Date()))
+                Log.i(tag, "l> $resultPrimo")
+            }
+        }
+    }
+
+    private fun fibonacciSerie(numbersInSerie: Long): String {
+        var stringBuilder: StringBuilder = StringBuilder()
+        var i: Long = 1
+        var t1: Long = 0
+        var t2: Long = 1
+
+        stringBuilder.append("Primeros $numbersInSerie numeros de la serie de fibonnacci: ")
+
+        while (i <= numbersInSerie) {
+            stringBuilder.append("$t1, ")
+
+            val sum = t1 + t2
+            t1 = t2
+            t2 = sum
+
+            i++
+        }
+        Log.i(tag, "l> Ya tenemos el resultado fibonacci: " + formatter.format(Date()))
+        return stringBuilder.toString()
+    }
+
+    fun listaPrimos(numeroFin: Int): String {
+        var stringBuilder: StringBuilder = StringBuilder()
+        for (x in 0..numeroFin) {
+            if (esPrimo(x)) {
+                stringBuilder.append("$x, ")
+            }
+        }
+        Log.i(
+            tag,
+            "l> Ya tenemos el resultado de los numeros primos existentes antes que el número $numeroFin: " + formatter.format(
+                Date()
+            )
+        )
+        return stringBuilder.toString()
+    }
+
+    fun esPrimo(numero: Int): Boolean {
+        var contador = 2
+        var primo = true
+        while (primo && contador != numero) {
+            if (numero % contador == 0) {
+                primo = false
+            }
+            contador++
+        }
+        return primo
     }
 }
